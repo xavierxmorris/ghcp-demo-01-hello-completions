@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>GHCP Demo 01 — Hello Completions</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; }
+    code { background: #f4f4f4; padding: 0 .25rem; border-radius: 3px; }
+    table { border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: .25rem .75rem; text-align: left; }
+  </style>
+</head>
+<body>
+  <h1>Hello, Copilot</h1>
+  <p>Open <code>src/utils.js</code> in your editor and follow the README.</p>
+  <p>This page just demonstrates that the helpers in <code>utils.js</code> work.</p>
+  <div id="output"></div>
+
+  <script type="module">
+    import { celsiusToFahrenheit } from './src/utils.js';
+    const out = document.getElementById('output');
+    const rows = [0, 20, 100].map(c =>
+      `<tr><td>${c}°C</td><td>${celsiusToFahrenheit(c)}°F</td></tr>`
+    ).join('');
+    out.innerHTML = `<table><tr><th>°C</th><th>°F</th></tr>${rows}</table>`;
+  </script>
+</body>
+</html>
