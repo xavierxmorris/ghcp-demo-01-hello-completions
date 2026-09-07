@@ -9,6 +9,10 @@ This is the smallest possible "hello world" for GitHub Copilot. You'll experienc
 **ghost text** — Copilot's grey, inline suggestions — and learn the muscle memory
 for accepting, rejecting, and cycling through them.
 
+**Go deeper:** [WORKSHOP.md](WORKSHOP.md) adds a 30-minute guided lab,
+input/output contracts, boundary cases, a deliberate failure exercise, and an
+evidence checklist. The starter functions are intentionally incomplete.
+
 ---
 
 ## What you'll learn
@@ -22,6 +26,7 @@ for accepting, rejecting, and cycling through them.
 - VS Code (or any JetBrains IDE / Visual Studio / Neovim with Copilot extension).
 - An active GitHub Copilot subscription (or trial / Business / Enterprise seat).
 - The Copilot extension installed and signed in.
+- Python 3 for the local static server, or an equivalent trusted HTTP server.
 
 ## Setup
 ```bash
@@ -29,7 +34,15 @@ git clone https://github.com/xavierxmorris/ghcp-demo-01-hello-completions.git
 cd ghcp-demo-01-hello-completions
 code .
 ```
-Open `index.html` in a browser (double-click works) to see the playground.
+Serve the repository from a terminal, then open <http://127.0.0.1:8001/>:
+
+```powershell
+python -m http.server 8001 --bind 127.0.0.1
+```
+
+The pages import JavaScript modules. Browsers commonly block those imports
+under `file://`, so double-clicking the HTML is not a reliable setup. Keep the
+server terminal open and stop it with Ctrl+C when finished.
 
 ## Cheat sheet — keyboard shortcuts
 
@@ -42,14 +55,18 @@ Open `index.html` in a browser (double-click works) to see the playground.
 | Open Copilot panel (10 alts)   | `⌃ Return`           | `Ctrl + Enter`        |
 | Trigger suggestion manually    | `⌥ \`                | `Alt + \`             |
 
+Shortcuts vary by editor, operating system, and keymap. These are VS Code
+defaults; use Keyboard Shortcuts to find the corresponding Copilot or inline
+suggestion command if a key behaves differently. Suggestion timing and the
+number of alternatives are not guaranteed.
+
 ---
 
 ## Walkthrough
 
 ### Step 1 — Accept your first suggestion
 1. Open `src/utils.js`.
-2. Place your cursor at the **end of line 3** (after the `// TODO:` comment for
-   `celsiusToFahrenheit`).
+2. Place your cursor inside the empty body of `celsiusToFahrenheit`.
 3. Press `Enter`. Within ~1 second, grey ghost-text appears.
 4. Press `Tab` to accept.
 
@@ -77,7 +94,7 @@ Open `index.html` in a browser (double-click works) to see the playground.
 ### Step 4 — "Looks right but is wrong" — *the trust exercise*
 1. Open `src/buggy.js`. Read the comment for `isLeapYear`.
 2. Let Copilot complete it. Tab to accept.
-3. Open `src/buggy.test.html` in a browser. **Do all tests pass?**
+3. Open <http://127.0.0.1:8001/src/buggy.test.html>. **Do all eight cases pass?**
 
 ⚠️ Copilot often produces the *common* leap-year rule (`year % 4 === 0`) and
 misses the century-divisible-by-400 rule. This is the lesson: **completions
@@ -100,8 +117,9 @@ Stretch exercises — let Copilot draft, then verify:
 1. Add `kebabCase(str)` and `snakeCase(str)` to `utils.js` via comments only.
 2. Add a `debounce(fn, ms)` helper. Does Copilot get the timer reset logic right?
 3. In `context.js`, write `// Group users by department and average their scores`.
-4. Delete `index.html` and re-create it from a single comment at the top of an
-   empty file: `<!-- A page that uses utils.js to convert 0°C, 20°C, 100°C to °F and shows them in a table -->`.
+4. Create a separate `playground.html` from a single comment:
+   `<!-- A page that uses utils.js to convert 0°C, 20°C, 100°C to °F and shows them in a table -->`.
+   Keep the shipped page as your comparison rather than deleting it.
 
 ## Talking points / discussion
 - Copilot is **autocomplete on steroids**, not an oracle.
@@ -112,5 +130,5 @@ Stretch exercises — let Copilot draft, then verify:
 
 ## Next demo →
 Once comfortable with completions, move to
-[Demo 02 — Python Quickfix](../ghcp-demo-02-python-quickfix) to learn Copilot
+[Demo 02 — Python Quickfix](https://github.com/xavierxmorris/ghcp-demo-02-python-quickfix) to learn Copilot
 **Chat** slash-commands.
